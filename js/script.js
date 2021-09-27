@@ -1,38 +1,49 @@
 $(document).ready(function(){
 
-  $('#menu').click(function(){
-    $(this).toggleClass('fa-times');
-    $('header').toggleClass('toggle');
-  });
+    $('#menu').click(function(){
+        $(this).toggleClass('fa-times');
+        $('.navbar').toggleClass('nav-toggle');
+    });
 
-  $(window).on('scroll load',function(){
+    $('#login').click(function(){
+        $('.login-form').addClass('popup');
+    });
 
-    $('#menu').removeClass('fa-times');
-    $('header').removeClass('toggle');
+    $('.login-form form .fa-times').click(function(){
+        $('.login-form').removeClass('popup');
+    });
 
-    if($(window).scrollTop() > 0){
-      $('.top').show();
-    }else{
-      $('.top').hide();
-    }
+    $('#admin').click(function(){
+        $('.admin-form').addClass('popup');
+    });
 
-  });
+    $('.admin-form form .fa-times').click(function(){
+        $('.admin-form').removeClass('popup');
+    });
 
-  // smooth scrolling 
+    $(window).on('load scroll',function(){
 
-  $('a[href*="#"]').on('click',function(e){
+        $('#menu').removeClass('fa-times');
+        $('.navbar').removeClass('nav-toggle');
 
-    e.preventDefault();
+        $('.login-form').removeClass('popup');
+        $('.admin-form').removeClass('popup');
 
-    $('html, body').animate({
+        $('section').each(function(){
 
-      scrollTop : $($(this).attr('href')).offset().top,
+            let top = $(window).scrollTop();
+            let height = $(this).height();
+            let id = $(this).attr('id');
+            let offset = $(this).offset().top - 200;
 
-    },
-      500, 
-      'linear'
-    );
+            if(top > offset && top < offset + height){
+                $('.navbar ul li a').removeClass('active');
+                $('.navbar').find(`[href="#${id}"]`).addClass('active');
+            }
 
-  });
+
+        });
+
+    });
 
 });
